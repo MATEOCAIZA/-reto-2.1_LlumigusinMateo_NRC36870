@@ -1,0 +1,8 @@
+1. Mantén D dos segundos y suéltala: ¿qué contador subió más y por qué?
+- **Respuesta:** El contador de **cuadros (`_physics_process`) subió mucho más** que el de eventos (`_input`). Esto se debe a que `_physics_process` se ejecuta de forma constante a una frecuencia fija (por defecto 60 veces por segundo), sumando en cada fotograma que la tecla se mantenga presionada. En cambio, `_input` solo registra un evento cuando el estado físico cambia (al presionar y al soltar), generando muy pocas interrupciones en ese intervalo de tiempo.
+
+2. Mantén A: ¿qué valor muestran get_axis y get_action_strength("move_right"), y por qué difieren?
+- **Respuesta:** `get_axis("move_left", "move_right")` mostrará **-1.00**, mientras que `get_action_strength("move_right")` mostrará **0.00**. Difieren porque `get_axis` calcula de forma conjunta el balance ponderado entre las dos acciones opuestas del eje (dando un valor negativo si predomina la izquierda), mientras que `get_action_strength` evalúa de manera aislada y exclusiva la fuerza o activación de la acción solicitada (`move_right`), ignorando por completo cualquier otra.
+
+3. Gira la rueda del ratón: ¿qué clase de evento aparece y por qué su rama va antes que la del clic?
+- **Respuesta:** Aparece un evento de clase **`InputEventMouseButton`** (especificando los índices de la rueda hacia arriba o hacia abajo). Su detección se procesa dentro de los eventos de entrada del ratón; la estructura condicional evalúa la rueda antes que un clic tradicional porque las entradas de desplazamiento (*wheel*) se capturan como propiedades específicas de los botones del ratón dentro del flujo de eventos y se programan primero en la validación lógica de los tipos de entrada.
